@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>logback</contextName>
+	<!-- 日志根目录 -->
+	<property name="log.root.dir" value="./logs"/> 
+
+	<!-- 打印日志到控制台 -->
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder在控制台打印日志的格式 -->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- INFO级别的日志文件记录策略 -->
+	<appender name="RollingInfoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>${log.root.dir}/info/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.root.dir}/info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+        	<charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+        <!-- 使用LevelFilter设置,只会在文件中出现级别为INFO级别的日志内容 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">   
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>    
+            <onMismatch>DENY</onMismatch>  
+        </filter> 
+    </appender>
+
+	<!-- ERROR级别的日志文件记录策略 -->
+	<appender name="RollingErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>${log.root.dir}/error/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.root.dir}/error/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+        	<charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+        <!-- 使用LevelFilter设置,只会在文件中出现级别为ERROR级别的日志内容 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">   
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>    
+            <onMismatch>DENY</onMismatch>  
+        </filter> 
+    </appender>
+
+	<!-- SQL的日志文件记录策略 -->
+	<appender name="RollingSqlFile" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>${log.root.dir}/sql/sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.root.dir}/sql/sql-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+        	<charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+	<root level="INFO">
+		<appender-ref ref="Console" />
+	</root>
+	
+	<!-- INFO日志记录 -->
+	<logger name="org.ys.soft" level="INFO" addtivity="false">
+		<appender-ref ref="RollingInfoFile" />
+	</logger>
+	
+	<!-- ERROR日志记录 -->
+	<logger name="org.ys" level="ERROR" addtivity="false">
+		<appender-ref ref="RollingErrorFile" />
+	</logger>
+	
+	<!-- 打印执行的sql -->
+	<logger name="jdbc.sqltiming" level="DEBUG" addtivity="false">
+		<appender-ref ref="RollingSqlFile" />
+	</logger>
+	
+</configuration>

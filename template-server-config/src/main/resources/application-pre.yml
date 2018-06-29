@@ -1,0 +1,18 @@
+server:
+  port: 9999
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://pre.phoneerp.com:8888/eureka/
+
+spring:
+  application:
+    name: server-config
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config

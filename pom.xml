@@ -1,0 +1,225 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.ys.soft</groupId>
+	<artifactId>template</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.14.RELEASE</version>
+	</parent>
+
+	<modules>
+		<module>template-server-eureka</module>
+		<module>template-server-config</module>
+		<module>template-server-zuul</module>
+		<module>template-framework-base</module>
+		<module>template-framework-service</module>
+		<module>template-service-common</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Edgware.SR3</spring-cloud.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>1.3.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper</artifactId>
+				<version>5.1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper-spring-boot-starter</artifactId>
+				<version>1.2.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>1.1.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.39</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.googlecode.log4jdbc</groupId>
+				<artifactId>log4jdbc</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.6</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>4.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>1.2.28</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>2.10.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.auth0</groupId>
+				<artifactId>java-jwt</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>19.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson</artifactId>
+				<version>2.11.5</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.codingapi</groupId>
+				<artifactId>transaction-dubbo</artifactId>
+				<version>4.1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.codingapi</groupId>
+				<artifactId>tx-plugins-db</artifactId>
+				<version>4.1.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<!-- 开发环境 -->
+			<id>dev</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+			</properties>
+			<activation>
+				<!-- 默认为开发环境 -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<!-- 测试环境 -->
+			<id>beta</id>
+			<properties>
+				<profiles.active>beta</profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<!-- 预生产环境 -->
+			<id>pre</id>
+			<properties>
+				<profiles.active>pre</profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<!-- 生产环境 -->
+			<id>pro</id>
+			<properties>
+				<profiles.active>pro</profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<resources>
+			<resource>
+				<!-- 指定打包时需要特殊处理的文件 -->
+				<directory>src/main/resources</directory>
+				<!-- 处理文件时,需要对文件进行变量替换 -->
+				<filtering>true</filtering>
+				<excludes>
+					<!-- 指定打包时,不要包含这些文件 -->
+					<exclude>application-dev.yml</exclude>
+					<exclude>application-beta.yml</exclude>
+					<exclude>application-pre.yml</exclude>
+					<exclude>application-pro.yml</exclude>
+					<exclude>bootstrap-dev.yml</exclude>
+					<exclude>bootstrap-beta.yml</exclude>
+					<exclude>bootstrap-pre.yml</exclude>
+					<exclude>bootstrap-pro.yml</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<!-- 指定打包时需要特殊处理的文件 -->
+				<directory>src/main/resources</directory>
+				<!-- 处理文件时,需要对文件进行变量替换 -->
+				<filtering>true</filtering>
+				<includes>
+					<!-- 指定打包时,不要包含这些文件 -->
+					<include>application-${profiles.active}.yml</include>
+					<include>application.yml</include>
+					<include>bootstrap-${profiles.active}.yml</include>
+					<include>bootstrap.yml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+</project>

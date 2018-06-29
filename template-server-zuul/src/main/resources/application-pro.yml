@@ -1,0 +1,20 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://www.phoneerp.com:8888/eureka/
+      
+server:
+  port: 9090
+  
+spring:
+  application:
+    name: server-zuul
+    
+zuul:
+  routes:
+    api-ribbon:
+      path: /api/ribbon/**
+      serviceId: ribbon-service
+    api-feign:
+      path: /api/feign/**
+      serviceId: feign-service
