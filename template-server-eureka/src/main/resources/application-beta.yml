@@ -3,7 +3,7 @@ server:
 
 eureka:
   instance:
-    hostname: branch.phoneerp.com
+    hostname: main.server.com
   client:
     registerWithEureka: false
     fetchRegistry: false

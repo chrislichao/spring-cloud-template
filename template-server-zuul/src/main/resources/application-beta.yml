@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://branch.phoneerp.com:8888/eureka/
+      defaultZone: http://main.server.com:8888/eureka/
       
 server:
   port: 9090
