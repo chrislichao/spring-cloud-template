@@ -205,6 +205,10 @@
 					<exclude>bootstrap-beta.yml</exclude>
 					<exclude>bootstrap-pre.yml</exclude>
 					<exclude>bootstrap-pro.yml</exclude>
+					<exclude>filter/dev/*</exclude>
+					<exclude>filter/beta/*</exclude>
+					<exclude>filter/pre/*</exclude>
+					<exclude>filter/pro/*</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -219,6 +223,9 @@
 					<include>bootstrap-${profiles.active}.yml</include>
 					<include>bootstrap.yml</include>
 				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/filter/${profiles.active}</directory>
 			</resource>
 		</resources>
 	</build>
