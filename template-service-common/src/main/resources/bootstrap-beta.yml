@@ -2,7 +2,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://main.server.com:8888/eureka/
+      defaultZone: http://192.168.137.2:8888/eureka/
   
 spring:
   application:
@@ -13,7 +13,7 @@ spring:
     config:
       label: master
       profile: @profiles.active@
-      uri: http://main.server.com:9999
+      uri: http://192.168.137.2:9999
       
   
       
